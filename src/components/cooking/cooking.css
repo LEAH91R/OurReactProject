@@ -1,0 +1,85 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e1e1e1;
+}
+
+h1 {
+    text-align: center;
+    color: #4a7c2f;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #6c757d;
+    font-size: 1.8em;
+    margin-top: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 15px;
+    border-bottom: 1px solid #e1e1e1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s;
+}
+
+li:hover {
+    background-color: #f8f9fa;
+}
+
+li input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+input[type="text"], input[type="number"], select {
+    margin: 10px 0;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    width: calc(100% - 24px);
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.prepared {
+    text-decoration: line-through;
+    color: #aaa;
+    font-style: italic;
+}
