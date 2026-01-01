@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 //משתנים שישנו את הרשימות בעת רינדור
 const Shopping = ({
     basicItems, setBasicItems,
@@ -48,6 +49,7 @@ const Shopping = ({
         //איפוס תוכן הפריט לעדכון
         setEditValue('');
     };
+
     //ניהול מחיקת פריט
     const handleDelete = (list, index) => {
         {/*משתנה המחזיק את אפשרות שינוי הרשימה הנדרשת למחיקה*/ }
@@ -55,6 +57,7 @@ const Shopping = ({
         {/*מחיקת הפריט מהרשימה- ע"י שליפת כל הפריטים האחרים בלבד*/ }
         setter(prev => prev.filter((_, i) => i !== index));
     };
+
     //הוספת פריט חדש
     const addItem = (list) => {
         //בדיקה האם המשתמש באמת הזין פריט
@@ -67,6 +70,7 @@ const Shopping = ({
             setNewItem(prev => ({ ...prev, [list]: '' }));
         }
     };
+
     //פונקציה המחזירה את פונקצית שינוי הרשימה המבוקשת ע"י קבלת שמה
     const getSetter = (list) => {
         switch (list) {
@@ -79,6 +83,7 @@ const Shopping = ({
             default: return () => { };
         }
     };
+
     //פונקציה המחזירה את הרשימה המבוקשת ע"י קבלת שמה
     const getItems = (list) => {
         switch (list) {
@@ -92,40 +97,40 @@ const Shopping = ({
         }
     };
 
-    const colors = ['#fdffe5ff', '#fff4eeff', '#f0f8ff', '#defaecff', '#fff4f2ff', '#e0ffff'];
     //פונקציה המחזירה את הרשימה המתאימה לכותרת
     const renderList = (listName) => {
         //משתנה המחזיק את הרשימה המבוקשת
         const items = getItems(listName);
         return (
-            <ul style={{ listStyle: 'none', padding: 0 }}>
+            <ul className="item-list">
                 {/*מעבר על הרשימה*/}
                 {items.map((item, index) => (
-                    <li key={index} style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', backgroundColor: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <li key={index} className="item-row">
                         {editingItem && editingItem.list === listName && editingItem.index === index ? (
                             //אם לחצו על עריכה
-                            <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+                            <div style={{ display: 'flex', flex: 1, gap: '10px' }}>
                                 <input
+                                    className="custom-input"
                                     type="text"
                                     //השמת תוכן ההקלדה הנוכחי של המשתמש
                                     value={editValue}
                                     //כל הקלדה של המשתמש תשנה את מצב הinput ע"י שליחת התו הנוכחי 
                                     onChange={(e) => setEditValue(e.target.value)}
-                                    style={{ flex: 1, marginRight: '10px', padding: '5px' }}
                                 />
                                 {/*כפתור לשמירת הפריט החדש*/}
-                                <button onClick={handleSave} style={{ margin: '0px 5px', padding: '5px 10px', backgroundColor: '#6e9ea4ff', color: 'white', border: 'none', borderRadius: '3px' }}>שמור</button>
+                                <button className="btn btn-save" onClick={handleSave}>שמור</button>
                                 {/*כפתור ביטול*/}
-                                <button onClick={handleCancel} style={{ padding: '5px 10px', backgroundColor: '#e17a73ff', color: 'white', border: 'none', borderRadius: '3px' }}>ביטול</button>
+                                <button className="btn btn-delete" onClick={handleCancel}>ביטול</button>
                             </div>
-                        ) : (      //מה שיוצג באופן רגיל
+                        ) : (
+                            //מה שיוצג באופן רגיל
                             <>
                                 <span>{item}</span>
                                 <div>
                                     {/*כפתור העריכה*/}
-                                    <button onClick={() => handleEdit(listName, index, item)} style={{ margin: '0px 5px', padding: '5px 10px', backgroundColor: '#6e9ea4ff', color: 'white', border: 'none', borderRadius: '3px' }}>ערוך</button>
+                                    <button className="btn btn-edit" onClick={() => handleEdit(listName, index, item)} style={{ marginLeft: '8px' }}>ערוך</button>
                                     {/*כפתור המחיקה*/}
-                                    <button onClick={() => handleDelete(listName, index)} style={{ padding: '5px 10px', backgroundColor: '#e17a73ff', color: 'white', border: 'none', borderRadius: '3px' }}>מחק</button>
+                                    <button className="btn btn-delete" onClick={() => handleDelete(listName, index)}>מחק</button>
                                 </div>
                             </>
                         )}
@@ -146,38 +151,31 @@ const Shopping = ({
     ];
 
     return (
-        <div dir="rtl" style={{ padding: '20px', background: 'linear-gradient(to bottom, #d2eaf4ff, #ffffff)', minHeight: '100vh' }}>
+        <div className="container" dir="rtl">
             {/*כותרת כללית*/}
-            <h1 style={{ textAlign: 'center', color: '#446569ff', marginBottom: '30px' }}>רשימות קניות לשבת</h1>
+            <h1 className="main-title">רשימות קניות לשבת</h1>
             {/*שליפת הרשימות ע"י מעבר על מערך הכותרות*/}
-            {sections.map((section, index) => (
-                <div key={section.name} style={{
-                    backgroundColor: colors[index % colors.length],
-                    padding: '20px',
-                    marginBottom: '20px',
-                    borderRadius: '10px',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                    border: '1px solid #ddd'
-                }}>
+            {sections.map((section) => (
+                <div key={section.name} className="section-card">
                     {/*הצגת כותרת הרשימה*/}
-                    <h2 style={{ color: '#446569ff', marginBottom: '15px' }}>{section.title}</h2>
+                    <h2 className="section-title">{section.title}</h2>
                     {/*הצגת הרשימות המתאימות לכותרת*/}
                     {renderList(section.name)}
                     {/*אפשרות הוספה*/}
-                    <div style={{ marginTop: '15px', display: 'flex', gap: '10px' }}>
+                    <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
                         <input
+                            className="custom-input"
                             type="text"
                             placeholder="הוסף פריט חדש"
-                           //הגדרת קטגורית הפריט החדש
+                            //הגדרת קטגורית הפריט החדש
                             value={newItem[section.name] || ''}
                             //בלחיצה יתווסף הפריט החדש ע"י שליחת ערכו כתוכן הקטגוריה שלו
                             onChange={(e) => setNewItem(prev => ({ ...prev, [section.name]: e.target.value }))}
-                            style={{ flex: 1, padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }}
                         />
                         <button
+                            className="btn btn-add"
                             //הוספת הפריט המבוקש לרשימה
                             onClick={() => addItem(section.name)}
-                            style={{ padding: '8px 15px', backgroundColor: '#7a7a7aff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
                         >
                             הוסף
                         </button>
@@ -185,7 +183,9 @@ const Shopping = ({
                 </div>
             ))}
             {/*שמירת הנתונים ומעבר לדף שבו תוצג הרשימה המלאה*/}
-            <Link to="/save">שמירת הנתונים</Link>
+            <div style={{ textAlign: 'center' }}>
+                <Link to="/save" className="footer-link">שמירת הנתונים</Link>
+            </div>
         </div>
     );
 };
