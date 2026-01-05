@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaTasks } from 'react-icons/fa';
 
 //איסוף כל הרשימות לרשימה אחת
 const ShoppingHandling = ({
@@ -27,7 +28,10 @@ const ShoppingHandling = ({
     return (
         <div className="container" dir="rtl">
             {/*כותרת ראשית*/}
-            <h1 className="main-title">ניהול רשימות קניות לשבת</h1>
+            <h1 className="main-title">
+                <FaTasks />
+                ניהול רשימות קניות לשבת
+            </h1>
             <div className="section-card">
                 {/*כותרת משנה*/}
                 <h2 className="section-title">רשימת קניות מלאה</h2>
